@@ -31,21 +31,4 @@ export default {
 }
 </script>
 <!-- styling for the component -->
-<style>
-@media only screen and (min-width: 992px) {
-  .brand-logo {
-    margin-left: 15px;
-  }
-}
-nav .brand-logo img {
-  max-height: 48px;
-}
-
-nav,
-nav .nav-wrapper i,
-nav a.sidenav-trigger,
-nav a.sidenav-trigger i {
-  height: 48px;
-  line-height: 48px;
-}
-</style>
+<style></style>
