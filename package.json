@@ -11,9 +11,12 @@
     "build": "node build/build.js"
   },
   "dependencies": {
+    "leaflet": "^1.5.1",
     "materialize-css": "^1.0.0-rc.2",
+    "vgauge": "^1.2.6",
     "vue": "^2.5.2",
-    "vue-router": "^3.0.1"
+    "vue-router": "^3.0.1",
+    "vue2-leaflet": "^2.2.1"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.2",
