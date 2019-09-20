@@ -11,11 +11,11 @@
               .input-field.col.s12
                 input#username.validate(type="text")
                 label(for="username") Username
-            
+
               .input-field.col.s12
                 input#password.validate(type="password")
                 label(for="password") Password
-            
+
             .row
               .col.s12
                 .btn-large.full-width.blue Login
