@@ -31,6 +31,7 @@
 </template>
 
 <script>
+const M = require('materialize-css')
 const apiHost = process.env.API_ENDPOINT
 
 export default {
@@ -60,7 +61,8 @@ export default {
       })
         .then(resp => resp.json())
         .then(data => {
-          console.log(data)
+          if (data.status) currVue.$router.push('/login')
+          else M.toast({ html: 'Something bad happened. Please try again.' })
         })
         .catch(err => {
           console.error(err)
