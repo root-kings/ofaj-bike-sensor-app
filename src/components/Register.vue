@@ -1,0 +1,75 @@
+<template lang="pug">
+  #register.pink.lighten-5.screen-height.valign-wrapper
+    .full-width
+      .row
+        .col.s12.m6.offset-m3.l4.offset-l4
+          .card-panel
+            h4.light.center fuelostic
+            h5.light.center Register
+
+            .row
+              .input-field.col.s12
+                input#name.validate(type="text" v-model="name")
+                label(for="name") Name
+            
+              .input-field.col.s12
+                input#username.validate(type="text" v-model="username")
+                label(for="username") Username
+
+              .input-field.col.s12
+                input#password.validate(type="password" v-model="password")
+                label(for="password") Password
+
+            .row
+              .col.s12
+                .btn-large.full-width.blue(@click="register()") Register
+
+            .row
+              .col.s12.center
+                router-link.btn-flat.full-width(:to="'/login'") Login
+              
+
+</template>
+
+<script>
+const apiHost = process.env.API_ENDPOINT
+
+export default {
+  name: 'Register',
+  data() {
+    return {
+      name: '',
+      username: '',
+      password: ''
+    }
+  },
+  methods: {
+    register() {
+      let currVue = this
+      fetch(apiHost + '/register', {
+        method: 'POST',
+        mode: 'cors',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json;charset=UTF-8'
+        },
+        body: JSON.stringify({
+          name: currVue.name,
+          username: currVue.username,
+          password: currVue.password
+        })
+      })
+        .then(resp => resp.json())
+        .then(data => {
+          console.log(data)
+        })
+        .catch(err => {
+          console.error(err)
+        })
+      // console.log(this.name, this.username, this.password)
+    }
+  }
+}
+</script>
+<!-- styling for the component -->
+<style></style>

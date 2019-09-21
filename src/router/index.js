@@ -6,6 +6,7 @@ import About from '@/components/About'
 import Vehicles from '@/components/Vehicles'
 import Profile from '@/components/Profile'
 import Login from '@/components/Login'
+import Register from '@/components/Register'
 
 Vue.use(Router)
 
@@ -35,6 +36,11 @@ export default new Router({
       path: '/login',
       name: 'Login',
       component: Login
+    },
+    {
+      path: '/register',
+      name: 'Register',
+      component: Register
     }
   ],
   mode: 'history'

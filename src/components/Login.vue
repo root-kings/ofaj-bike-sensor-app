@@ -21,7 +21,9 @@
                 .btn-large.full-width.blue Login
 
             .row
-              .col.s12.center
+              .col.s6.center
+                router-link.btn-flat.full-width(:to="'/register'") Register
+              .col.s6.center
                 .btn-flat.full-width(@click="") Forgot Password
 
 </template>
