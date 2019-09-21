@@ -57,11 +57,8 @@ export default {
       })
         .then(resp => resp.json())
         .then(data => {
-          if (data.status) {
-            currVue.$router.push('/vehicles')
-          } else {
-            M.toast({ html: 'Incorrect login details.' })
-          }
+          if (data.status) currVue.$router.push('/vehicles')
+          else M.toast({ html: 'Incorrect login details.' })
         })
         .catch(err => {
           console.error(err)
