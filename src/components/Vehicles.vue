@@ -9,15 +9,15 @@
             .row
               .col.s6.center
                 h5.light Fuel
-                v-gauge#fuelGauge.gauge(:height="gauge.height" :maxValue="100" :minValue="0" unit="%" :value="fuel")
+                v-gauge#fuelGauge.gauge(:height="gauge.height" :maxValue="100" :minValue="0" unit="%" :value="selectedVehicle.fuel")
               .col.s6.center
                 h5.light Speed
-                v-gauge#speedGauge.gauge(:height="gauge.height" :maxValue="200" :minValue="0" unit="kmph" :value="speed")
+                v-gauge#speedGauge.gauge(:height="gauge.height" :maxValue="200" :minValue="0" unit="kmph" :value="selectedVehicle.speed")
               .col.s12
 
-                l-map#trackermap( :zoom="map.zoom" :center="map.center")
+                l-map#trackermap( :zoom="map.zoom" :center="location")
                   l-tile-layer(:url="map.url")
-                  l-marker(:lat-lng="map.center")
+                  l-marker(:lat-lng="location")
 
     .modal#vehicleFormModal(ref="vehicleFormModal")
       .modal-content
@@ -30,7 +30,6 @@
 
 <script>
 import M from 'materialize-css'
-const apiHost = process.env.API_ENDPOINT
 
 import Layout from '@/components/Layout'
 
@@ -43,6 +42,8 @@ import { LMap, LTileLayer, LMarker } from 'vue2-leaflet'
 
 import { Icon } from 'leaflet'
 import 'leaflet/dist/leaflet.css'
+
+const apiHost = process.env.API_ENDPOINT
 
 // this part resolve an issue where the markers would not appear
 delete Icon.Default.prototype._getIconUrl
@@ -64,24 +65,29 @@ export default {
     LTileLayer,
     LMarker
   },
-  data: () => {
+  data() {
     return {
-      vehicles: [
-        { model: 'Veyron', make: 'Bugatti', _id: 1 },
-        { model: '525i', make: 'BMW', _id: 2 },
-        { model: 'SLS', make: 'Mercedes AMG', _id: 3 },
-        { model: 'A8', make: 'Audi', _id: 4 }
-      ],
-      speed: 35,
-      fuel: 45,
+      vehicles: [],
+      selectedVehicle: {
+        speed: 35,
+        fuel: 45,
+        lat: 21.125509,
+        lng: 79.022119
+      },
+
       gauge: {
         height: '125px'
       },
       map: {
         zoom: 13,
-        center: [21.125509, 79.022119],
+
         url: `https://api.tiles.mapbox.com/v4/mapbox.streets/{z}/{x}/{y}.png?access_token=pk.eyJ1Ijoia3J1c2huZGF5c2htb29raCIsImEiOiJjazBxaXloanowMjd0M2Jtc3dobTN0azV6In0.fxd0j10H7zXSH0aE3APu2g`
       }
+    }
+  },
+  computed: {
+    location() {
+      return [this.selectedVehicle.lat, this.selectedVehicle.lng]
     }
   },
   mounted() {
