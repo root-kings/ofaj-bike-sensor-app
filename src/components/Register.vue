@@ -31,7 +31,7 @@
 </template>
 
 <script>
-const M = require('materialize-css')
+import M from 'materialize-css'
 const apiHost = process.env.API_ENDPOINT
 
 export default {
