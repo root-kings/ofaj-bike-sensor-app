@@ -29,7 +29,7 @@
 </template>
 
 <script>
-const M = require('materialize-css')
+import M from 'materialize-css'
 const apiHost = process.env.API_ENDPOINT
 
 export default {
@@ -57,8 +57,10 @@ export default {
       })
         .then(resp => resp.json())
         .then(data => {
-          if (data.status) currVue.$router.push('/vehicles')
-          else M.toast({ html: 'Incorrect login details.' })
+          if (data.status) {
+            currVue.$session.set('user', data.user)
+            currVue.$router.push('/vehicles')
+          } else M.toast({ html: 'Incorrect login details.' })
         })
         .catch(err => {
           console.error(err)
