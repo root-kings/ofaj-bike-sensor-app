@@ -5,8 +5,10 @@
         .col.s12.m3
           vehicle-list(:vehicles="vehicles" @selectVehicle="selectVehicle")
         .col.s12.m9
-          .card-panel
+          .card-panel(v-if="showDashboard")
             .row
+              .col.s12
+                h4.center {{ selectedVehicle.make }} {{ selectedVehicle.model }}
               .col.s6.center
                 h5.light Fuel
                 v-gauge#fuelGauge.gauge(:height="gauge.height" :maxValue="100" :minValue="0" unit="%" :value="state.fuel")
@@ -82,10 +84,15 @@ export default {
 
         url: `https://api.tiles.mapbox.com/v4/mapbox.streets/{z}/{x}/{y}.png?access_token=pk.eyJ1Ijoia3J1c2huZGF5c2htb29raCIsImEiOiJjazBxaXloanowMjd0M2Jtc3dobTN0azV6In0.fxd0j10H7zXSH0aE3APu2g`
       },
-      ticker
+      ticker: null,
+      selectedVehicle: null
     }
   },
-
+  computed: {
+    showDashboard() {
+      return this.selectedVehicle && true
+    }
+  },
   mounted() {
     this.vehicleFormModal = M.Modal.init(this.$refs.vehicleFormModal)
 
@@ -97,6 +104,7 @@ export default {
     },
     handleSaved(status) {
       if (status) this.vehicleFormModal.close()
+      this.populateVehicles()
     },
     populateVehicles() {
       let currVue = this
@@ -115,9 +123,7 @@ export default {
           if (data.status) {
             currVue.selectedVehicle = data.vehicle
             this.setTicker()
-          } else {
-            M.toast({ html: 'Vehicle not found.' })
-          }
+          } else M.toast({ html: 'Vehicle not found.' })
         })
         .catch(err => {
           console.error(err)
@@ -131,12 +137,10 @@ export default {
     },
     fetchData() {
       let currVue = this
-      fetch(apiHost + '/record/latest/' + currVue.selectVehicle._id)
+      fetch(apiHost + '/record/latest/' + currVue.selectedVehicle._id)
         .then(resp => resp.json())
         .then(record => {
-          if (record.lat && record.lng) {
-            currVue.state = record
-          }
+          if (record.lat && record.lng) currVue.state = record
         })
     }
   },
