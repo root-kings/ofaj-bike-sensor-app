@@ -43,7 +43,12 @@ export default {
   components: { Layout, VehicleList, VGauge, LMap, LTileLayer, LMarker },
   data: () => {
     return {
-      vehicles: [{ model: 'Veyron', make: 'Bugatti', _id: 1 }, { model: '525i', make: 'BMW', _id: 2 }, { model: 'SLS', make: 'Mercedes AMG', _id: 3 }, { model: 'A8', make: 'Audi', _id: 4 }],
+      vehicles: [
+        { model: 'Veyron', make: 'Bugatti', _id: 1 },
+        { model: '525i', make: 'BMW', _id: 2 },
+        { model: 'SLS', make: 'Mercedes AMG', _id: 3 },
+        { model: 'A8', make: 'Audi', _id: 4 }
+      ],
       speed: 35,
       fuel: 45,
       gauge: {

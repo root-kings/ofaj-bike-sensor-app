@@ -11,7 +11,7 @@
               .input-field.col.s12
                 input#name.validate(type="text" v-model="name")
                 label(for="name") Name
-            
+
               .input-field.col.s12
                 input#username.validate(type="text" v-model="username")
                 label(for="username") Username
@@ -27,7 +27,6 @@
             .row
               .col.s12.center
                 router-link.btn-flat.full-width(:to="'/login'") Login
-              
 
 </template>
 
@@ -46,7 +45,7 @@ export default {
   methods: {
     register() {
       let currVue = this
-      fetch(apiHost + '/register', {
+      fetch(apiHost + '/user/create', {
         method: 'POST',
         mode: 'cors',
         headers: {

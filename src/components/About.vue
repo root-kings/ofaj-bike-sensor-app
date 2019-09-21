@@ -9,10 +9,9 @@ import Layout from '@/components/Layout'
 
 export default {
   name: 'About',
-  components: {Layout}
+  components: { Layout }
 }
 </script>
 <!-- styling for the component -->
 <style>
-
 </style>

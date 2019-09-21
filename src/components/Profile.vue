@@ -28,8 +28,8 @@ export default {
 
 <!-- styling for the component -->
 <style>
-.card-image{
-  overflow:hidden;
+.card-image {
+  overflow: hidden;
   max-height: 256px;
 }
 </style>
