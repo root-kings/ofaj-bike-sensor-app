@@ -1,6 +1,6 @@
 <template lang="pug">
   .collection
-    a.collection-item(v-for="vehicle in vehicles", :key="vehicle._id") {{ vehicle.make }} {{ vehicle.model }}
+    a.collection-item(@click="$emit('selectVehicle', vehicle._id)" v-for="vehicle in vehicles", :key="vehicle._id") {{ vehicle.make }} {{ vehicle.model }}
 </template>
 
 <script>

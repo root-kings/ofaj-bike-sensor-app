@@ -3,21 +3,21 @@
     section#vehicles.section
       .row
         .col.s12.m3
-          vehicle-list(:vehicles="vehicles")
+          vehicle-list(:vehicles="vehicles" @selectVehicle="selectVehicle")
         .col.s12.m9
           .card-panel
             .row
               .col.s6.center
                 h5.light Fuel
-                v-gauge#fuelGauge.gauge(:height="gauge.height" :maxValue="100" :minValue="0" unit="%" :value="selectedVehicle.fuel")
+                v-gauge#fuelGauge.gauge(:height="gauge.height" :maxValue="100" :minValue="0" unit="%" :value="state.fuel")
               .col.s6.center
                 h5.light Speed
-                v-gauge#speedGauge.gauge(:height="gauge.height" :maxValue="200" :minValue="0" unit="kmph" :value="selectedVehicle.speed")
+                v-gauge#speedGauge.gauge(:height="gauge.height" :maxValue="200" :minValue="0" unit="kmph" :value="state.speed")
               .col.s12
 
-                l-map#trackermap( :zoom="map.zoom" :center="location")
+                l-map#trackermap( :zoom="map.zoom" :center="[state.lat,state.lng]")
                   l-tile-layer(:url="map.url")
-                  l-marker(:lat-lng="location")
+                  l-marker(:lat-lng="[state.lat,state.lng]")
 
     .modal#vehicleFormModal(ref="vehicleFormModal")
       .modal-content
@@ -68,15 +68,14 @@ export default {
   data() {
     return {
       vehicles: [],
-      selectedVehicle: {
-        speed: 35,
-        fuel: 45,
-        lat: 21.125509,
-        lng: 79.022119
-      },
-
       gauge: {
         height: '125px'
+      },
+      state: {
+        speed: 0,
+        fuel: 0,
+        lat: 0,
+        lng: 0
       },
       map: {
         zoom: 13,
@@ -85,11 +84,7 @@ export default {
       }
     }
   },
-  computed: {
-    location() {
-      return [this.selectedVehicle.lat, this.selectedVehicle.lng]
-    }
-  },
+
   mounted() {
     this.vehicleFormModal = M.Modal.init(this.$refs.vehicleFormModal)
 
@@ -109,6 +104,22 @@ export default {
         .then(vehicles => (currVue.vehicles = vehicles))
         .catch(err => {
           console.error(err)
+        })
+    },
+    selectVehicle(vehicleID) {
+      let currVue = this
+      fetch(apiHost + '/vehicle/' + vehicleID)
+        .then(resp => resp.json())
+        .then(data =>
+          data.status
+            ? (currVue.selectedVehicle = data.vehicle)
+            : M.toast({ html: 'Vehicle not found.' })
+        )
+        .catch(err => {
+          console.error(err)
+        })
+        .then(() => {
+          console.log(currVue.selectedVehicle)
         })
     }
   }
