@@ -19,16 +19,29 @@
                   l-tile-layer(:url="map.url")
                   l-marker(:lat-lng="map.center")
 
+    .modal#vehicleFormModal(ref="vehicleFormModal")
+      .modal-content
+        vehicle-form(ref="vehicleForm")
+    .fixed-action-btn
+      .btn-floating.btn-large.red.waves-effect.waves-light(@click="showVehicleForm()")
+        i.large.material-icons add
+
 </template>
 
 <script>
+import M from 'materialize-css'
 import Layout from '@/components/Layout'
+
 import VehicleList from '@/components/VehicleList'
+import VehicleForm from '@/components/VehicleForm'
+
 import VGauge from 'vgauge'
+
 import { LMap, LTileLayer, LMarker } from 'vue2-leaflet'
 
 import { Icon } from 'leaflet'
 import 'leaflet/dist/leaflet.css'
+
 // this part resolve an issue where the markers would not appear
 delete Icon.Default.prototype._getIconUrl
 
@@ -40,7 +53,15 @@ Icon.Default.mergeOptions({
 
 export default {
   name: 'Vehicles',
-  components: { Layout, VehicleList, VGauge, LMap, LTileLayer, LMarker },
+  components: {
+    Layout,
+    VehicleList,
+    VehicleForm,
+    VGauge,
+    LMap,
+    LTileLayer,
+    LMarker
+  },
   data: () => {
     return {
       vehicles: [
@@ -61,7 +82,14 @@ export default {
       }
     }
   },
-  mounted: () => {}
+  mounted() {
+    this.vehicleFormModal = M.Modal.init(this.$refs.vehicleFormModal)
+  },
+  methods: {
+    showVehicleForm() {
+      this.vehicleFormModal.open()
+    }
+  }
 }
 </script>
 <!-- styling for the component -->
