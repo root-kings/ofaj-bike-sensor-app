@@ -3,7 +3,7 @@
     header
       nav
         .nav-wrapper.blue-grey
-          a.brand-logo(href="#") Logo
+          a.brand-logo(href="#") Fuelostic
           a.sidenav-trigger(href="#" data-target="mobile-demo")
             i.material-icons menu
           ul#nav-mobile.right.hide-on-med-and-down
