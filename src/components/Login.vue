@@ -9,16 +9,16 @@
 
             .row
               .input-field.col.s12
-                input#username.validate(type="text")
-                label(for="username") Username
+                input#email.validate(type="email" v-model="email")
+                label(for="email") Email
 
               .input-field.col.s12
-                input#password.validate(type="password")
+                input#password.validate(type="password" v-model="password")
                 label(for="password") Password
 
             .row
               .col.s12
-                .btn-large.full-width.blue Login
+                .btn-large.full-width.blue(@click="login()") Login
 
             .row
               .col.s6.center
@@ -29,8 +29,45 @@
 </template>
 
 <script>
+const M = require('materialize-css')
+const apiHost = process.env.API_ENDPOINT
+
 export default {
-  name: 'Login'
+  name: 'Login',
+  data() {
+    return {
+      email: '',
+      password: ''
+    }
+  },
+  methods: {
+    login() {
+      let currVue = this
+      fetch(apiHost + '/user/login', {
+        method: 'POST',
+        mode: 'cors',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json;charset=UTF-8'
+        },
+        body: JSON.stringify({
+          email: currVue.email,
+          password: currVue.password
+        })
+      })
+        .then(resp => resp.json())
+        .then(data => {
+          if (data.status) {
+            currVue.$router.push('/vehicles')
+          } else {
+            M.toast({ html: 'Incorrect login details.' })
+          }
+        })
+        .catch(err => {
+          console.error(err)
+        })
+    }
+  }
 }
 </script>
 <!-- styling for the component -->
