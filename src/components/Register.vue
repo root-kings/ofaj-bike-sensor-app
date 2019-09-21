@@ -13,8 +13,8 @@
                 label(for="name") Name
 
               .input-field.col.s12
-                input#username.validate(type="text" v-model="username")
-                label(for="username") Username
+                input#email.validate(type="email" v-model="email")
+                label(for="email") Email
 
               .input-field.col.s12
                 input#password.validate(type="password" v-model="password")
@@ -38,7 +38,7 @@ export default {
   data() {
     return {
       name: '',
-      username: '',
+      email: '',
       password: ''
     }
   },
@@ -54,7 +54,7 @@ export default {
         },
         body: JSON.stringify({
           name: currVue.name,
-          username: currVue.username,
+          email: currVue.email,
           password: currVue.password
         })
       })
@@ -65,7 +65,7 @@ export default {
         .catch(err => {
           console.error(err)
         })
-      // console.log(this.name, this.username, this.password)
+      // console.log(this.name, this.email, this.password)
     }
   }
 }
