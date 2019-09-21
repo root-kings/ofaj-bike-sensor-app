@@ -81,7 +81,8 @@ export default {
         zoom: 13,
 
         url: `https://api.tiles.mapbox.com/v4/mapbox.streets/{z}/{x}/{y}.png?access_token=pk.eyJ1Ijoia3J1c2huZGF5c2htb29raCIsImEiOiJjazBxaXloanowMjd0M2Jtc3dobTN0azV6In0.fxd0j10H7zXSH0aE3APu2g`
-      }
+      },
+      ticker
     }
   },
 
@@ -110,18 +111,37 @@ export default {
       let currVue = this
       fetch(apiHost + '/vehicle/' + vehicleID)
         .then(resp => resp.json())
-        .then(data =>
-          data.status
-            ? (currVue.selectedVehicle = data.vehicle)
-            : M.toast({ html: 'Vehicle not found.' })
-        )
+        .then(data => {
+          if (data.status) {
+            currVue.selectedVehicle = data.vehicle
+            this.setTicker()
+          } else {
+            M.toast({ html: 'Vehicle not found.' })
+          }
+        })
         .catch(err => {
           console.error(err)
         })
         .then(() => {
           console.log(currVue.selectedVehicle)
         })
+    },
+    setTicker() {
+      this.ticker = setInterval(this.fetchData, 1000)
+    },
+    fetchData() {
+      let currVue = this
+      fetch(apiHost + '/record/latest/' + currVue.selectVehicle._id)
+        .then(resp => resp.json())
+        .then(record => {
+          if (record.lat && record.lng) {
+            currVue.state = record
+          }
+        })
     }
+  },
+  beforeDestroy() {
+    clearInterval(this.ticker)
   }
 }
 </script>
