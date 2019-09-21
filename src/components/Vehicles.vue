@@ -21,9 +21,9 @@
 
     .modal#vehicleFormModal(ref="vehicleFormModal")
       .modal-content
-        vehicle-form(ref="vehicleForm")
+        vehicle-form(ref="vehicleForm" @saved="handleSaved")
     .fixed-action-btn
-      .btn-floating.btn-large.red.waves-effect.waves-light(@click="showVehicleForm()")
+      .btn-floating.btn-large.red.waves-effect.waves-light(@click="showVehicleForm")
         i.large.material-icons add
 
 </template>
@@ -88,6 +88,9 @@ export default {
   methods: {
     showVehicleForm() {
       this.vehicleFormModal.open()
+    },
+    handleSaved(status) {
+      if (status) this.vehicleFormModal.close()
     }
   }
 }
