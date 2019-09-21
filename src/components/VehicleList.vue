@@ -6,10 +6,7 @@
 <script>
 export default {
   name: 'VehicleList',
-  props: ['vehicles'],
-  mounted: () => {
-    console.log(this.props)
-  }
+  props: ['vehicles']
 }
 </script>
 <!-- styling for the component -->
