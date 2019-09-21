@@ -60,7 +60,8 @@ export default {
       })
         .then(resp => resp.json())
         .then(data => {
-          console.log(data)
+          if (data.status) currVue.$router.push('/login')
+          else alert("Something bad happened. Please try again.")
         })
         .catch(err => {
           console.error(err)
