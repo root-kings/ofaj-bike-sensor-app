@@ -30,6 +30,8 @@
 
 <script>
 import M from 'materialize-css'
+const apiHost = process.env.API_ENDPOINT
+
 import Layout from '@/components/Layout'
 
 import VehicleList from '@/components/VehicleList'
@@ -84,6 +86,8 @@ export default {
   },
   mounted() {
     this.vehicleFormModal = M.Modal.init(this.$refs.vehicleFormModal)
+
+    this.populateVehicles()
   },
   methods: {
     showVehicleForm() {
@@ -91,6 +95,15 @@ export default {
     },
     handleSaved(status) {
       if (status) this.vehicleFormModal.close()
+    },
+    populateVehicles() {
+      let currVue = this
+      fetch(apiHost + '/user/' + currVue.$session.get('user')._id + '/vehicles')
+        .then(resp => resp.json())
+        .then(vehicles => (currVue.vehicles = vehicles))
+        .catch(err => {
+          console.error(err)
+        })
     }
   }
 }
