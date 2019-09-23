@@ -128,9 +128,6 @@ export default {
         .catch(err => {
           console.error(err)
         })
-        .then(() => {
-          console.log(currVue.selectedVehicle)
-        })
     },
     setTicker() {
       this.ticker = setInterval(this.fetchData, 1000)
