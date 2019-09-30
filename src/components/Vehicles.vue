@@ -137,7 +137,7 @@ export default {
       fetch(apiHost + '/record/latest/' + currVue.selectedVehicle._id)
         .then(resp => resp.json())
         .then(record => {
-          if (record.lat && record.lng) currVue.state = record
+          currVue.state = record
         })
     }
   },
