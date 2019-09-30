@@ -11,9 +11,11 @@
     "build": "node build/build.js"
   },
   "dependencies": {
+    "cors": "^2.8.5",
     "express": "^4.17.1",
     "leaflet": "^1.5.1",
     "materialize-css": "^1.0.0",
+    "morgan": "^1.9.1",
     "vgauge": "^1.2.6",
     "vue": "^2.5.2",
     "vue-router": "^3.0.1",
