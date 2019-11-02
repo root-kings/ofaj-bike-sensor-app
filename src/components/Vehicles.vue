@@ -9,7 +9,7 @@
             .row
               .col.s12
                 h4.center {{ selectedVehicle.make }} {{ selectedVehicle.model }}
-                h6.light.center {{ vehicle.registration }}
+                h6.light.center {{ selectedVehicle.registration }}
               .col.s6.center
                 h5.light Fuel
                 v-gauge#fuelGauge.gauge(:height="gauge.height" :maxValue="100" :minValue="0" unit="%" :value="state.fuel")
